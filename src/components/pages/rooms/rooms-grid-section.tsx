@@ -6,6 +6,7 @@ interface Room {
   description: string;
   price: number;
   type: string;
+  image: string;
   features: string[];
   amenities: string[];
 }
@@ -25,10 +26,12 @@ export default function RoomsGridSection({ rooms }: RoomsGridProps) {
               href={`/rooms/${room.id}`}
               className="group block bg-white elegant-shadow elegant-border rounded-sm overflow-hidden hover:shadow-lg transition-shadow"
             >
-              <div className="h-48 bg-primary/10 flex items-center justify-center">
-                <span className="font-serif text-5xl text-primary/30">
-                  Hab.
-                </span>
+              <div className="h-48 bg-primary/10 relative overflow-hidden">
+                <img
+                  src={room.image}
+                  alt={room.name}
+                  className="w-full h-full object-cover"
+                />
               </div>
 
               <div className="p-6">

@@ -22,14 +22,11 @@ export default function HomeAboutSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="relative h-112.5 lg:h-137.5 bg-muted rounded-sm overflow-hidden">
-            <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-primary/10" />
-            <div className="absolute inset-8 border border-primary/20" />
-            <div className="absolute inset-16 border border-primary/10" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="font-serif text-9xl font-light text-primary/20">
-                QK
-              </span>
-            </div>
+            <img
+              src="https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=800&q=80"
+              alt="Recepción de Qori Kallpa"
+              className="w-full h-full object-cover"
+            />
           </div>
 
           <div className="space-y-8">

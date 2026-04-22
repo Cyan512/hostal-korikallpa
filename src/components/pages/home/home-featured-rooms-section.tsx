@@ -8,7 +8,7 @@ const rooms = [
       'Espaciosa habitación para toda la familia con vista a la ciudad.',
     price: 120,
     image:
-      'https://images.unsplash.com/photo-1631049307264-da0c9bd9b7f0?w=400&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&h=300&fit=crop',
     features: ['4 personas', 'Cama doble + individuales', 'Baño privado'],
   },
   {
@@ -66,12 +66,11 @@ export default function HomeFeaturedRoomsSection() {
               className="group block bg-white elegant-shadow elegant-border rounded-sm overflow-hidden hover:shadow-lg transition-shadow"
             >
               <div className="h-44 bg-primary/10 relative overflow-hidden">
-                <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-primary/15" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-serif text-4xl text-primary/30">
-                    Hab.
-                  </span>
-                </div>
+                <img
+                  src={room.image}
+                  alt={room.name}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="p-5">
                 <h3 className="font-serif text-lg font-semibold mb-2 group-hover:text-accent transition-colors">

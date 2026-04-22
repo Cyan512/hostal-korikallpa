@@ -175,13 +175,16 @@ export default function ContactContactSection() {
             </div>
 
             <div className="bg-white elegant-shadow elegant-border rounded-sm overflow-hidden h-80">
-              <div className="w-full h-full bg-primary/10 flex items-center justify-center">
-                <div className="text-center">
-                  <span className="block text-5xl mb-2">📍</span>
-                  <p className="text-muted-foreground">Mapa de ubicación</p>
-                  <p className="text-sm text-muted-foreground">Cusco, Perú</p>
-                </div>
-              </div>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3879.563726427818!2d-71.9690895!3d-13.5319508!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x916dd60a2f1a1a1b%3A0x1a1a1a1a1a1a1a1a!2sCusco%2C%20Peru!5e0!3m2!1sen!2sus!4v1600000000000!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación de Qori Kallpa"
+              />
             </div>
           </div>
         </div>

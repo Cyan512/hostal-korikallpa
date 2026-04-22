@@ -13,6 +13,8 @@ const allRooms = [
       'Espaciosa habitación para toda la familia con vista a la ciudad. Incluye sala de estar y baño privado.',
     price: 120,
     type: 'familiar',
+    image:
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=80',
     features: [
       '4 personas',
       'Cama doble + individuales',
@@ -28,6 +30,8 @@ const allRooms = [
       'Elegante suite con zona de estar y balcón con vista panorámica a la ciudad.',
     price: 95,
     type: 'matrimonial',
+    image:
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=80',
     features: ['2 personas', 'Cama queen', 'Zona de estar', 'Balcón'],
     amenities: ['WiFi', 'TV', 'Calefacción', 'Minibar'],
   },
@@ -37,6 +41,8 @@ const allRooms = [
     description: 'Habitación acogedora con dos camas queen y baño privado.',
     price: 65,
     type: 'doble',
+    image:
+      'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80',
     features: ['2 personas', '2 camas queen', 'Baño privado'],
     amenities: ['WiFi', 'Calefacción'],
   },
@@ -46,6 +52,8 @@ const allRooms = [
     description: 'Habitación elegante para viajeros solos.',
     price: 45,
     type: 'individual',
+    image:
+      'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=600&q=80',
     features: ['1 persona', 'Cama twin', 'Baño compartido'],
     amenities: ['WiFi', 'Calefacción'],
   },
@@ -55,6 +63,8 @@ const allRooms = [
     description: 'Suite de lujo con salón privado, chimenea y terraza.',
     price: 200,
     type: 'matrimonial',
+    image:
+      'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&q=80',
     features: ['4 personas', '2 habitaciones', 'Salón privado', 'Terraza'],
     amenities: ['WiFi', 'TV', 'Calefacción', 'Minibar', 'Caja fuerte'],
   },
@@ -64,6 +74,8 @@ const allRooms = [
     description: 'Opción cómoda y funcional para viajeros.',
     price: 35,
     type: 'individual',
+    image:
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80',
     features: ['1 persona', 'Cama twin', 'Baño compartido'],
     amenities: ['WiFi'],
   },
@@ -77,6 +89,7 @@ export type Room = {
   description: string;
   price: number;
   type: string;
+  image: string;
   features: string[];
   amenities: string[];
 };
