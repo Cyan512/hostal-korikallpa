@@ -72,70 +72,70 @@ export default function RoomModal({ room, onClose }: RoomModalProps) {
         </button>
 
         <div className="lg:col-span-2 p-6 lg:p-8 overflow-y-auto max-h-[90vh] flex-1">
-            <span className="text-xs px-2 py-1 bg-muted rounded-sm capitalize inline-block mb-4">
-              {typeLabels[room.type] || room.type}
-            </span>
-            <h2 className="font-serif text-2xl lg:text-3xl font-semibold mb-4">
-              {room.name}
-            </h2>
+          <span className="text-xs px-2 py-1 bg-muted rounded-sm capitalize inline-block mb-4">
+            {typeLabels[room.type] || room.type}
+          </span>
+          <h2 className="font-serif text-2xl lg:text-3xl font-semibold mb-4">
+            {room.name}
+          </h2>
 
-            <div className="bg-muted/30 rounded-sm overflow-hidden mb-6">
-              <img
-                src={room.image}
-                alt={room.name}
-                className="w-full h-64 object-cover"
-              />
+          <div className="bg-muted/30 rounded-sm overflow-hidden mb-6">
+            <img
+              src={room.image}
+              alt={room.name}
+              className="w-full h-64 object-cover"
+            />
+          </div>
+
+          <p className="text-muted-foreground leading-relaxed mb-8">
+            {room.description}
+          </p>
+
+          <div className="mb-6">
+            <h3 className="font-serif text-lg font-semibold mb-4">
+              Características
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {room.features.map((feature, index) => (
+                <div
+                  key={feature}
+                  className="flex items-center gap-3 p-3 bg-muted/30 rounded-sm"
+                >
+                  <span className="text-xs w-6 h-6 bg-primary-dark text-white rounded-full flex items-center justify-center">
+                    {index + 1}
+                  </span>
+                  <span className="text-sm font-medium">{feature}</span>
+                </div>
+              ))}
             </div>
+          </div>
 
-            <p className="text-muted-foreground leading-relaxed mb-8">
-              {room.description}
-            </p>
-
-            <div className="mb-6">
-              <h3 className="font-serif text-lg font-semibold mb-4">
-                Características
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {room.features.map((feature, index) => (
-                  <div
-                    key={feature}
-                    className="flex items-center gap-3 p-3 bg-muted/30 rounded-sm"
+          <div>
+            <h3 className="font-serif text-lg font-semibold mb-4">
+              Comodidades
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {room.amenities.map((amenity) => (
+                <div
+                  key={amenity}
+                  className="flex items-center gap-2 p-3 bg-muted/30 rounded-sm text-sm"
+                >
+                  <svg
+                    className="w-4 h-4 text-accent shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
                   >
-                    <span className="text-xs w-6 h-6 bg-primary-dark text-white rounded-full flex items-center justify-center">
-                      {index + 1}
-                    </span>
-                    <span className="text-sm font-medium">{feature}</span>
-                  </div>
-                ))}
-              </div>
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>{amenity}</span>
+                </div>
+              ))}
             </div>
-
-            <div>
-              <h3 className="font-serif text-lg font-semibold mb-4">
-                Comodidades
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {room.amenities.map((amenity) => (
-                  <div
-                    key={amenity}
-                    className="flex items-center gap-2 p-3 bg-muted/30 rounded-sm text-sm"
-                  >
-                    <svg
-                      className="w-4 h-4 text-accent shrink-0"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    <span>{amenity}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+          </div>
 
           <div className="bg-muted/20 p-6 lg:p-8 lg:w-80 shrink-0">
             <div className="sticky top-0">

@@ -84,7 +84,10 @@ function ServiceModal({
               </h4>
               <ul className="space-y-2">
                 {service.details.split('\n').map((line, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-gray-700">
+                  <li
+                    key={index}
+                    className="flex items-start gap-2 text-sm text-gray-700"
+                  >
                     <span className="text-amber-700 mt-0.5">✓</span>
                     {line}
                   </li>
@@ -135,7 +138,6 @@ export default function HomeServicesSection() {
     fetchServices();
   }, [locale]);
 
-
   return (
     <section className="py-24 bg-primary-dark text-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -183,7 +185,9 @@ export default function HomeServicesSection() {
                   <p className="text-white/70 text-sm mb-2">
                     {service.description}
                   </p>
-                  <span className="text-accent font-medium">{service.price}</span>
+                  <span className="text-accent font-medium">
+                    {service.price}
+                  </span>
                 </div>
               </div>
             ))

@@ -1,47 +1,66 @@
+'use client';
 import { Link } from '@/src/i18n/navigation';
+import { useEffect, useState } from 'react';
+import { useLocale } from 'next-intl';
+import environment from '@/src/environment';
+import { getAllRooms } from '@/src/api/strapi/get-all-rooms';
 
-const rooms = [
-  {
-    id: 'habitacion-familiar',
-    name: 'Habitación Familiar',
-    description:
-      'Espaciosa habitación para toda la familia con vista a la ciudad.',
-    price: 120,
-    image:
-      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&h=300&fit=crop',
-    features: ['4 personas', 'Cama doble + individuales', 'Baño privado'],
-  },
-  {
-    id: 'habitacion-matrimonial',
-    name: 'Suite Matrimonial',
-    description:
-      'Elegante suite con zona de estar y balcón con vista panorámica.',
-    price: 95,
-    image:
-      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&h=300&fit=crop',
-    features: ['2 personas', 'Cama queen', 'Zona de estar', 'Balcón'],
-  },
-  {
-    id: 'habitacion-doble',
-    name: 'Habitación Doble',
-    description: 'Habitación acogedora con dos camas queen.',
-    price: 65,
-    image:
-      'https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=400&h=300&fit=crop',
-    features: ['2 personas', '2 camas queen', 'Baño privado'],
-  },
-  {
-    id: 'habitacion-individual',
-    name: 'Habitación Individual',
-    description: 'Habitación elegante para viajeros solos.',
-    price: 45,
-    image:
-      'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=400&h=300&fit=crop',
-    features: ['1 persona', 'Cama twin', 'Baño compartido'],
-  },
-];
+interface Rooms {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  type: string;
+  images: string;
+  features: string;
+  amenities: string;
+}
+
+interface StrapiRooms {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  type: string;
+  images: {
+    url: string;
+  }[];
+  features: string;
+  amenities: string;
+}
 
 export default function HomeFeaturedRoomsSection() {
+  const [selectedService, setSelectedService] = useState<Rooms | null>(null);
+  const [rooms, setRooms] = useState<Rooms[]>([]);
+  const [loading, setLoading] = useState(true);
+  const locale = useLocale();
+
+  useEffect(() => {
+    async function fetchRooms() {
+      setLoading(true);
+      try {
+        const data = await getAllRooms<{ data: StrapiRooms[] }>(locale);
+        const mappedRooms: Rooms[] = data.data.map((rooms) => ({
+          id: rooms.id,
+          name: rooms.name,
+          description: rooms.description,
+          price: rooms.price,
+          type: rooms.type,
+          features: rooms.features,
+          amenities: rooms.amenities,
+          images: rooms.images?.[0]?.url
+            ? `${environment.strapi.apiEndpoint}${rooms.images[0].url}`
+            : '',
+        }));
+        setRooms(mappedRooms);
+      } catch (error) {
+        console.error('Error fetching services:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchRooms();
+  }, [locale]);
   return (
     <section className="py-24 bg-muted/30">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -59,7 +78,7 @@ export default function HomeFeaturedRoomsSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {rooms.map((room) => (
+          {rooms.slice(0, 4).map((room) => (
             <Link
               key={room.id}
               href={`/rooms/${room.id}`}
@@ -67,7 +86,7 @@ export default function HomeFeaturedRoomsSection() {
             >
               <div className="h-44 bg-primary/10 relative overflow-hidden">
                 <img
-                  src={room.image}
+                  src={room.images}
                   alt={room.name}
                   className="w-full h-full object-cover"
                 />
@@ -80,14 +99,17 @@ export default function HomeFeaturedRoomsSection() {
                   {room.description}
                 </p>
                 <div className="flex gap-2 mb-4">
-                  {room.features.slice(0, 2).map((feature) => (
-                    <span
-                      key={feature}
-                      className="text-xs px-2 py-1 bg-muted rounded-sm"
-                    >
-                      {feature}
-                    </span>
-                  ))}
+                  {(room.features ?? '')
+                    .split('\n') // 🔥 convierte a array
+                    .slice(0, 2) // 🔥 toma solo 2
+                    .map((feature, index) => (
+                      <span
+                        key={index}
+                        className="text-xs px-2 py-1 bg-muted rounded-sm"
+                      >
+                        {feature}
+                      </span>
+                    ))}
                 </div>
                 <div className="flex items-end justify-between pt-4 border-t border-border">
                   <span className="text-xl font-semibold text-accent">
