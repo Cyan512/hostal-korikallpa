@@ -1,10 +1,12 @@
 const protocol = process.env.NEXT_PUBLIC_STRAPI_PROTOCOL || 'http';
 const host = process.env.NEXT_PUBLIC_STRAPI_HOST || 'localhost';
-const port = process.env.NEXT_PUBLIC_STRAPI_PORT || '1337';
+const port = process.env.NEXT_PUBLIC_STRAPI_PORT;
 
 const environment = {
   strapi: {
-    apiEndpoint: `${protocol}://${host}:${port}`,
+    apiEndpoint: port
+      ? `${protocol}://${host}:${port}`
+      : `${protocol}://${host}`,
   },
 };
 
