@@ -14,6 +14,7 @@ interface Rooms {
   images: string;
   features: string;
   amenities: string;
+  slug: string;
 }
 
 interface StrapiRooms {
@@ -27,10 +28,10 @@ interface StrapiRooms {
   }[];
   features: string;
   amenities: string;
+  slug: string;
 }
 
 export default function HomeFeaturedRoomsSection() {
-  const [selectedService, setSelectedService] = useState<Rooms | null>(null);
   const [rooms, setRooms] = useState<Rooms[]>([]);
   const [loading, setLoading] = useState(true);
   const locale = useLocale();
@@ -51,6 +52,7 @@ export default function HomeFeaturedRoomsSection() {
           images: rooms.images?.[0]?.url
             ? `${environment.strapi.apiEndpoint}${rooms.images[0].url}`
             : '',
+          slug: rooms.slug,
         }));
         setRooms(mappedRooms);
       } catch (error) {
@@ -81,7 +83,7 @@ export default function HomeFeaturedRoomsSection() {
           {rooms.slice(0, 4).map((room) => (
             <Link
               key={room.id}
-              href={`/rooms/${room.id}`}
+              href={`/rooms/${room.slug}`}
               className="group block bg-white elegant-shadow elegant-border rounded-sm overflow-hidden hover:shadow-lg transition-shadow"
             >
               <div className="h-44 bg-primary/10 relative overflow-hidden">
