@@ -6,7 +6,11 @@ services:
     ports:
       - '3000:3000'
     environment:
-      - NODE_ENV=production
-      - NEXT_TELEMETRY_DISABLED=1
-      # Add any other environment variables your app needs here
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: 1
+      STRAPI_TOKEN: ${STRAPI_TOKEN}
+      NEXT_PUBLIC_STRAPI_TOKEN: ${NEXT_PUBLIC_STRAPI_TOKEN}
+      NEXT_PUBLIC_STRAPI_PROTOCOL: ${NEXT_PUBLIC_STRAPI_PROTOCOL}
+      NEXT_PUBLIC_STRAPI_HOST: ${NEXT_PUBLIC_STRAPI_HOST}
+      NEXT_PUBLIC_STRAPI_PORT: ${NEXT_PUBLIC_STRAPI_PORT}
     restart: unless-stopped
