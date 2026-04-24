@@ -1,5 +1,5 @@
 import { getContentPage } from '@/src/api/strapi/get-content-page';
-import GalleryListSection from '@/src/components/pages/gallery/gallery-list-section';
+import GalleryListSectionV2 from '@/src/components/pages/gallery/gallery-list-section-v2';
 import SharedHeroSection from '@/src/components/pages/shared-hero-section';
 import {
   GalleryBlocks,
@@ -15,7 +15,7 @@ function renderComponent(component: GalleryBlocks, index: number) {
       return <SharedHeroSection key={key} />;
     case 'gallery.gallery-list':
       return (
-        <GalleryListSection key={key} data={component as GalleryListEntity} />
+        <GalleryListSectionV2 key={key} data={component as GalleryListEntity} />
       );
     default:
       return null;

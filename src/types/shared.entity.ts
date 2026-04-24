@@ -12,7 +12,7 @@ export interface SharedAboutEntity {
 
 export interface ImgEntity {
   id: number;
-  categary: string;
+  category: string;
   src: StrapiImage;
   alt: string;
 }
