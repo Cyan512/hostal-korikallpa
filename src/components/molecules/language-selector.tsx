@@ -5,7 +5,7 @@ import { useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 
 const languages = [
-  { code: 'en', label: 'US' },
+  { code: 'en', label: 'EN' },
   { code: 'es', label: 'ES' },
   { code: 'fr', label: 'FR' },
 ];

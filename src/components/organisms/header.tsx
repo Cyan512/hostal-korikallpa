@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Link } from '@/src/i18n/navigation';
 import { LanguageSelector } from '@/src/components/molecules/language-selector';
 import { useState } from 'react';
@@ -32,11 +33,13 @@ export default function Header() {
             href="/"
             className="flex items-center gap-3 absolute left-1/2 -translate-x-1/2"
           >
-            <div className="w-10 h-10 border border-primary-dark flex items-center justify-center">
-              <span className="font-serif text-lg font-bold text-primary-dark">
-                QK
-              </span>
-            </div>
+            <Image
+              src="/logo.webp"
+              alt="Qori Kallpa"
+              width={80}
+              height={80}
+              className="w-16 h-16 object-contain"
+            />
             <div className="hidden sm:flex flex-col">
               <span className="font-serif text-xl font-semibold text-primary-dark">
                 Qori Kallpa
@@ -63,9 +66,18 @@ export default function Header() {
         >
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-center px-6 py-5 border-b border-border pt-6">
-              <span className="font-serif text-xl font-semibold text-primary-dark">
-                Qori Kallpa
-              </span>
+              <div className="flex items-center gap-2">
+                <Image
+                  src="/logo.webp"
+                  alt="Qori Kallpa"
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 object-contain"
+                />
+                <span className="font-serif text-xl font-semibold text-primary-dark">
+                  Qori Kallpa
+                </span>
+              </div>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-2 hover:bg-muted rounded"
