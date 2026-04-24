@@ -33,21 +33,11 @@ export default function Header() {
             href="/"
             className="flex items-center gap-3 absolute left-1/2 -translate-x-1/2"
           >
-            <Image
+            <img
               src="/logo.webp"
               alt="Qori Kallpa"
-              width={80}
-              height={80}
               className="w-16 h-16 object-contain"
             />
-            <div className="hidden sm:flex flex-col">
-              <span className="font-serif text-xl font-semibold text-primary-dark">
-                Qori Kallpa
-              </span>
-              <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                Hostal Boutique
-              </span>
-            </div>
           </Link>
           <LanguageSelector />
         </div>
@@ -67,16 +57,11 @@ export default function Header() {
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-center px-6 py-5 border-b border-border pt-6">
               <div className="flex items-center gap-2">
-                <Image
+                <img
                   src="/logo.webp"
                   alt="Qori Kallpa"
-                  width={40}
-                  height={40}
                   className="w-10 h-10 object-contain"
                 />
-                <span className="font-serif text-xl font-semibold text-primary-dark">
-                  Qori Kallpa
-                </span>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
