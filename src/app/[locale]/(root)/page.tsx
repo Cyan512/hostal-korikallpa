@@ -1,9 +1,14 @@
 import { getContentPage } from '@/src/api/strapi/get-content-page';
 import HomeAboutSection from '@/src/components/pages/home/home-about-section';
-import HomeFeaturedRoomsSection from '@/src/components/pages/home/home-featured-rooms-section';
+import HomeFeaturedRoomsSectionV2 from '@/src/components/pages/home/home-featured-rooms-section-v2';
 import HomeHeroSection from '@/src/components/pages/home/home-hero-section';
-import HomeServicesSection from '@/src/components/pages/home/home-services-section';
-import { HomeBlocks, HomeContent } from '@/src/types/pages/home-page.entity';
+import HomeServicesSectionV2 from '@/src/components/pages/home/home-services-section-v2';
+import {
+  HomeBlocks,
+  HomeContent,
+  HomeRoomsEntity,
+  HomeServicesEntity,
+} from '@/src/types/pages/home-page.entity';
 import { setRequestLocale } from 'next-intl/server';
 
 function renderComponent(component: HomeBlocks, index: number) {
@@ -14,9 +19,19 @@ function renderComponent(component: HomeBlocks, index: number) {
     case 'shared.section-about':
       return <HomeAboutSection key={key} />;
     case 'home.home-rooms':
-      return <HomeFeaturedRoomsSection key={key} />;
+      return (
+        <HomeFeaturedRoomsSectionV2
+          key={key}
+          data={component as HomeRoomsEntity}
+        />
+      );
     case 'home.home-services':
-      return <HomeServicesSection key={key} />;
+      return (
+        <HomeServicesSectionV2
+          key={key}
+          data={component as HomeServicesEntity}
+        />
+      );
     default:
       return null;
   }

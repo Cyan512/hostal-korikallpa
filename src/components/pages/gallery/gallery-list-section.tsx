@@ -1,5 +1,6 @@
 'use client';
 
+import { GalleryListEntity } from '@/src/types/pages/gallery-page.entity';
 import { useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
@@ -70,7 +71,11 @@ const galleryImages = [
   },
 ];
 
-export default function GalleryListSection() {
+interface Props {
+  data: GalleryListEntity;
+}
+
+export default function GalleryListSection({ data }: Props) {
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
