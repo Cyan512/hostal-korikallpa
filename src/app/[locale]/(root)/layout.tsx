@@ -1,13 +1,10 @@
 import MainLayout from '@/src/components/templates/main-layout';
+import React from 'react';
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-
   return <MainLayout>{children}</MainLayout>;
 }

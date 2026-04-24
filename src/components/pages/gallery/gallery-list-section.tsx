@@ -11,7 +11,6 @@ const galleryImages = [
   {
     title: 'Fachada Principal',
     category: 'Exterior',
-    size: 'large',
     src: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&q=90',
   },
   {
@@ -27,7 +26,6 @@ const galleryImages = [
   {
     title: 'Habitación Deluxe',
     category: 'Habitaciones',
-    size: 'wide',
     src: 'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1200&q=90',
   },
   {
@@ -38,7 +36,6 @@ const galleryImages = [
   {
     title: 'Vista desde Terraza',
     category: 'Exterior',
-    size: 'large',
     src: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200&q=90',
   },
   {
@@ -49,7 +46,6 @@ const galleryImages = [
   {
     title: 'Escalera Colonial',
     category: 'Arquitectura',
-    size: 'wide',
     src: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=90',
   },
   {
@@ -70,7 +66,6 @@ const galleryImages = [
   {
     title: 'Cusco atardecer',
     category: 'Ciudad',
-    size: 'large',
     src: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=1200&q=90',
   },
 ];
@@ -102,13 +97,7 @@ export default function GalleryListSection() {
             <div
               key={index}
               onClick={() => openLightbox(index)}
-              className={`group relative mb-4 bg-primary/10 elegant-border rounded-sm overflow-hidden hover:shadow-lg transition-all cursor-pointer break-inside-avoid ${
-                image.size === 'large'
-                  ? 'aspect-4/5'
-                  : image.size === 'wide'
-                    ? 'sm:aspect-2/1'
-                    : 'aspect-square'
-              }`}
+              className="group relative mb-4 bg-primary/10 elegant-border rounded-sm overflow-hidden hover:shadow-lg transition-all cursor-pointer break-inside-avoid aspect-square"
             >
               <img
                 src={image.src}
