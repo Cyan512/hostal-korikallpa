@@ -43,7 +43,7 @@ export default function GalleryListSectionV2({ data }: Props) {
                 style={{ filter: 'drop-shadow(3px 6px 12px rgba(0,0,0,0.25))' }}
               >
                 {/* Polaroid frame */}
-                <div className="bg-white p-3 pb-10">
+                <div className="p-3 pb-0" style={{ background: 'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)' }}>
                   {/* Image area */}
                   <div className="relative aspect-square overflow-hidden">
                     <img
@@ -54,14 +54,19 @@ export default function GalleryListSectionV2({ data }: Props) {
                     {/* Hover overlay */}
                     <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
                       <div className="p-3">
-                        <p className="text-xs text-white/80">{image.category}</p>
+                        <p className="text-sm font-semibold text-white/90 uppercase tracking-widest">
+                          {image.category}
+                        </p>
                       </div>
                     </div>
                   </div>
                   {/* Polaroid caption area */}
-                  <div className="pt-2 pb-1 text-center">
-                    <p className="font-handwriting text-sm text-gray-600 truncate">
+                  <div className="py-4 px-1 text-center">
+                    <p className="font-serif text-base font-semibold text-stone-700 tracking-wide truncate">
                       {image.title}
+                    </p>
+                    <p className="text-xs font-medium text-stone-500 uppercase tracking-widest mt-1">
+                      {image.category}
                     </p>
                   </div>
                 </div>
