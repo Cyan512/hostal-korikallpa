@@ -106,6 +106,8 @@ interface Props {
   data: HomeServicesEntity;
 }
 
+const rotationDeg = [-2, 1, -1, 2, -3, 2];
+
 export default function HomeServicesSectionV2({ data }: Props) {
   const [selected, setSelected] = useState<
     (ServiceEntity & { imageSrc: string }) | null
@@ -114,84 +116,168 @@ export default function HomeServicesSectionV2({ data }: Props) {
   return (
     <>
       <section
-        className="py-12"
+        className="py-8"
         style={{
           background:
             'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
         }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          {/* Header */}
-          <div className="mb-10">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-stone-500">
-              Lo que ofrecemos
-            </p>
-            <h2 className="font-serif text-3xl font-bold text-stone-800 mt-1">
-              Experiencia Completa
-            </h2>
-            <div className="w-10 h-px bg-accent mt-3" />
+          {/* ── Desktop (lg+): info left, polaroids right ── */}
+          <div className="hidden lg:flex items-center gap-8">
+            {/* LEFT — info panel */}
+            <div className="w-64 shrink-0 space-y-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-stone-500">
+                  Lo que ofrecemos
+                </p>
+                <h2 className="font-serif text-3xl font-bold tracking-tight text-stone-800 leading-tight mt-1">
+                  Experiencia Completa
+                </h2>
+              </div>
+
+              <div className="w-10 h-px bg-accent" />
+
+              <p className="text-sm text-stone-600 leading-relaxed">
+                Más allá del alojamiento, te ofrecemos servicios diseñados para
+                hacer tu estancia en Cusco perfecta e inolvidable.
+              </p>
+
+              <div className="space-y-1.5 text-xs text-stone-600">
+                {data.services.slice(0, 4).map((s) => (
+                  <div key={s.id} className="flex items-center gap-2">
+                    <span className="text-accent text-[10px]">✦</span>
+                    <span>{s.title}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* RIGHT — always 4 polaroid slots */}
+            <div className="flex-1 flex items-center justify-between gap-3 py-6">
+              {Array.from(
+                { length: 4 },
+                (_, i) => data.services[i] ?? null
+              ).map((service, i) => {
+                const deg = rotationDeg[i % rotationDeg.length];
+                const imageSrc = service
+                  ? `${environment.strapi.apiEndpoint}${service.image.url}`
+                  : '';
+                return (
+                  <div
+                    key={service?.id ?? `empty-${i}`}
+                    className="flex-1 min-w-0 cursor-pointer"
+                    style={{
+                      transform: `rotate(${deg}deg)`,
+                      transition: 'transform 0.3s',
+                      filter: 'drop-shadow(3px 6px 12px rgba(0,0,0,0.25))',
+                      visibility: service ? 'visible' : 'hidden',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (service)
+                        (e.currentTarget as HTMLDivElement).style.transform =
+                          'rotate(0deg) scale(1.05) translateY(-4px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.transform =
+                        `rotate(${deg}deg)`;
+                    }}
+                    onClick={() => {
+                      if (service) setSelected({ ...service, imageSrc });
+                    }}
+                  >
+                    <div
+                      className="p-2 pb-0"
+                      style={{
+                        background:
+                          'linear-gradient(160deg, #faf6ee 0%, #f0ead8 50%, #e8dfc8 100%)',
+                      }}
+                    >
+                      <div className="aspect-square overflow-hidden relative">
+                        {service && (
+                          <img
+                            src={imageSrc}
+                            alt={service.title}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                        {service && (
+                          <div className="absolute top-2 left-2 bg-accent text-white text-[9px] font-bold px-1.5 py-0.5 leading-none">
+                            {service.price}
+                          </div>
+                        )}
+                      </div>
+                      <div className="py-2 px-1 text-center">
+                        <p className="font-serif text-[11px] font-semibold text-stone-700 truncate">
+                          {service?.title ?? '\u00A0'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Service cards — square with overlay */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 py-6">
-            {data.services.map((service) => {
-              const imageSrc = `${environment.strapi.apiEndpoint}${service.image.url}`;
-              return (
-                <div
-                  key={service.id}
-                  onClick={() => setSelected({ ...service, imageSrc })}
-                  className="group relative cursor-pointer overflow-hidden aspect-square transition-all duration-300 hover:-translate-y-1"
-                  style={{ boxShadow: '0 6px 20px rgba(0,0,0,0.18)' }}
-                >
-                  {/* Image */}
-                  <img
-                    src={imageSrc}
-                    alt={service.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
+          {/* ── Mobile / Tablet (< lg): stacked ── */}
+          <div className="flex flex-col gap-8 lg:hidden">
+            {/* Info */}
+            <div className="max-w-xs mx-auto w-full space-y-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-stone-500">
+                  Lo que ofrecemos
+                </p>
+                <h2 className="font-serif text-3xl font-bold text-stone-800 mt-1 leading-tight">
+                  Experiencia Completa
+                </h2>
+              </div>
+              <div className="w-10 h-px bg-accent" />
+              <p className="text-sm text-stone-600 leading-relaxed">
+                Servicios diseñados para hacer tu estancia en Cusco perfecta e
+                inolvidable.
+              </p>
+            </div>
 
-                  {/* Permanent dark overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
-
-                  {/* Content centered */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                    <h3 className="font-serif text-white font-bold text-base md:text-lg leading-tight drop-shadow-lg">
-                      {service.title}
-                    </h3>
-                    <div className="w-8 h-px bg-accent my-2" />
-                    <span className="text-accent font-bold text-sm drop-shadow">
-                      {service.price}
-                    </span>
-                  </div>
-
-                  {/* Hover: show description */}
-                  <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center text-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <h3 className="font-serif text-white font-bold text-sm leading-tight mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-white/80 text-xs leading-relaxed line-clamp-3 mb-3">
-                      {service.description}
-                    </p>
-                    <span className="text-[10px] uppercase tracking-widest text-white/60 flex items-center gap-1">
-                      Ver detalles
-                      <svg
-                        className="w-3 h-3"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2.5}
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 5l7 7-7 7"
+            {/* Polaroids 2×2 */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-3 py-4">
+              {data.services.map((service, i) => {
+                const imageSrc = `${environment.strapi.apiEndpoint}${service.image.url}`;
+                return (
+                  <div
+                    key={service.id}
+                    onClick={() => setSelected({ ...service, imageSrc })}
+                    className="cursor-pointer"
+                    style={{
+                      filter: 'drop-shadow(3px 6px 12px rgba(0,0,0,0.2))',
+                    }}
+                  >
+                    <div
+                      className="p-2 pb-0"
+                      style={{
+                        background:
+                          'linear-gradient(160deg, #faf6ee 0%, #f0ead8 50%, #e8dfc8 100%)',
+                      }}
+                    >
+                      <div className="aspect-square overflow-hidden relative">
+                        <img
+                          src={imageSrc}
+                          alt={service.title}
+                          className="w-full h-full object-cover"
                         />
-                      </svg>
-                    </span>
+                        <div className="absolute top-2 left-2 bg-accent text-white text-[9px] font-bold px-1.5 py-0.5 leading-none">
+                          {service.price}
+                        </div>
+                      </div>
+                      <div className="py-2 px-1 text-center">
+                        <p className="font-serif text-[11px] font-semibold text-stone-700 truncate">
+                          {service.title}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
