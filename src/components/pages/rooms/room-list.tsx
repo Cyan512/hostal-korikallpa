@@ -47,58 +47,86 @@ export default function RoomList() {
   };
 
   if (loading) {
-    return <section className="py-24 bg-muted/30">Cargando...</section>;
+    return (
+      <section
+        className="py-24"
+        style={{
+          background:
+            'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center text-stone-400 text-sm">
+          Cargando...
+        </div>
+      </section>
+    );
   }
 
   return (
     <>
-      <section className="py-24 bg-muted/30">
+      <section
+        className="py-12"
+        style={{
+          background:
+            'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
+        }}
+      >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {rooms.map((room) => (
-              <div
-                key={room.id}
-                onClick={() => handleRoomClick(room)}
-                className="group block bg-white elegant-shadow elegant-border rounded-sm overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-              >
-                <div className="h-44 bg-primary/10 relative overflow-hidden">
-                  <img
-                    src={`${environment.strapi.apiEndpoint}${room.images[0]?.url}`}
-                    alt={room.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="font-serif text-lg font-semibold mb-2 group-hover:text-accent transition-colors">
-                    {room.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {room.description}
-                  </p>
-                  <div className="flex gap-2 mb-4">
-                    {(room.features ?? '')
-                      .split('\n')
-                      .slice(0, 2)
-                      .map((feature, index) => (
-                        <span
-                          key={index}
-                          className="text-xs px-2 py-1 bg-muted rounded-sm"
-                        >
-                          {feature}
-                        </span>
-                      ))}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 py-6">
+            {rooms.map((room, index) => {
+              const rotations = [-2, 1, -1, 2, -3, 2, 1, -2];
+              const deg = rotations[index % rotations.length];
+              return (
+                <div
+                  key={room.id}
+                  className="cursor-pointer"
+                  style={{
+                    transform: `rotate(${deg}deg)`,
+                    transition: 'transform 0.3s',
+                    filter: 'drop-shadow(3px 6px 12px rgba(0,0,0,0.25))',
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLDivElement).style.transform =
+                      'rotate(0deg) scale(1.05) translateY(-4px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLDivElement).style.transform =
+                      `rotate(${deg}deg)`;
+                  }}
+                  onClick={() => handleRoomClick(room)}
+                >
+                  <div
+                    className="p-2 pb-0"
+                    style={{
+                      background:
+                        'linear-gradient(160deg, #faf6ee 0%, #f0ead8 50%, #e8dfc8 100%)',
+                    }}
+                  >
+                    <div className="aspect-square overflow-hidden relative">
+                      <img
+                        src={`${environment.strapi.apiEndpoint}${room.images[0]?.url}`}
+                        alt={room.name}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-2 left-2 bg-accent text-white text-[9px] font-bold px-1.5 py-0.5 leading-none">
+                        S/{room.price}
+                      </div>
+                      <div className="absolute top-2 right-2 bg-white/90 text-stone-700 text-[8px] font-semibold uppercase tracking-widest px-1.5 py-0.5 leading-none">
+                        {room.type}
+                      </div>
+                    </div>
+                    <div className="py-3 px-1 text-center space-y-0.5">
+                      <p className="font-serif text-sm font-semibold text-stone-800 truncate leading-tight">
+                        {room.name}
+                      </p>
+                      <p className="text-[9px] uppercase tracking-widest text-stone-400">
+                        {room.type}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-end justify-between pt-4 border-t border-border">
-                    <span className="text-xl font-semibold text-accent">
-                      S/{room.price}
-                      <span className="text-sm font-normal text-muted-foreground">
-                        /noche
-                      </span>
-                    </span>
-                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
