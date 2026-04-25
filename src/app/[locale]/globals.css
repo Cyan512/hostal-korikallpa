@@ -45,3 +45,8 @@ body {
 .font-sans {
   font-family: 'Inter', system-ui, sans-serif;
 }
+
+/* Hide scrollbar for Chrome/Safari */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
