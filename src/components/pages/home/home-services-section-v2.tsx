@@ -18,16 +18,22 @@ function ServiceModal({ service, onClose }: ServiceModalProps) {
     >
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
       <div
-        className="relative w-full max-w-3xl rounded-sm overflow-hidden shadow-2xl"
+        className="relative w-full max-w-lg"
         onClick={(e) => e.stopPropagation()}
+        style={{
+          background:
+            'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
+          boxShadow: '0 25px 60px rgba(0,0,0,0.4)',
+        }}
       >
+        {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-30 w-8 h-8 bg-black/40 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors"
+          className="absolute top-3 right-3 z-30 w-7 h-7 bg-stone-800/20 hover:bg-stone-800/50 rounded-full flex items-center justify-center text-stone-700 hover:text-white transition-colors"
           aria-label="Cerrar"
         >
           <svg
-            className="w-4 h-4"
+            className="w-3.5 h-3.5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -40,63 +46,96 @@ function ServiceModal({ service, onClose }: ServiceModalProps) {
             />
           </svg>
         </button>
-        <div className="flex flex-col md:flex-row">
-          <div className="relative w-full md:w-1/2 min-h-56 shrink-0">
-            <img
-              src={service.imageSrc}
-              alt={service.title}
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-5">
-              <h2 className="font-serif text-2xl font-bold text-white">
-                {service.title}
-              </h2>
-              <p className="text-accent font-bold text-lg mt-1">
-                {service.price}
-              </p>
+
+        {/* Top accent bar */}
+        <div className="h-1 w-full bg-accent" />
+
+        <div className="p-6 flex gap-5">
+          {/* Image — Polaroid style */}
+          <div
+            className="w-36 shrink-0 -rotate-3"
+            style={{ filter: 'drop-shadow(3px 6px 12px rgba(0,0,0,0.25))' }}
+          >
+            <div
+              className="p-2 pb-0"
+              style={{
+                background:
+                  'linear-gradient(160deg, #faf6ee 0%, #f0ead8 50%, #e8dfc8 100%)',
+              }}
+            >
+              <div className="aspect-square overflow-hidden relative">
+                <img
+                  src={service.imageSrc}
+                  alt={service.title}
+                  className="w-full h-full object-cover"
+                />
+                {service.price && (
+                  <div className="absolute top-2 left-2 bg-accent text-white text-[9px] font-bold px-1.5 py-0.5 leading-none">
+                    {service.price}
+                  </div>
+                )}
+              </div>
+              <div className="py-2 px-1 text-center">
+                <p className="font-serif text-[11px] font-semibold text-stone-700 truncate">
+                  {service.title}
+                </p>
+              </div>
             </div>
           </div>
-          <div
-            className="flex-1 flex flex-col p-6 gap-4"
-            style={{
-              background:
-                'linear-gradient(160deg, #faf6ee 0%, #f0ead8 60%, #e8dfc8 100%)',
-            }}
-          >
-            <p className="text-sm text-stone-600 leading-relaxed">
-              {service.description}
+
+          {/* Info */}
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] uppercase tracking-widest text-stone-400 mb-0.5">
+              Servicio
             </p>
-            {service.details && (
-              <>
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 h-px bg-stone-300" />
-                  <span className="text-accent text-xs">✦</span>
-                  <div className="flex-1 h-px bg-stone-300" />
-                </div>
-                <div>
-                  <h4 className="font-serif text-sm font-bold text-stone-700 uppercase tracking-widest mb-3">
-                    Incluye
-                  </h4>
-                  <ul className="space-y-2">
-                    {service.details
-                      .split('\n')
-                      .filter(Boolean)
-                      .map((line, i) => (
-                        <li
-                          key={i}
-                          className="flex items-start gap-2 text-sm text-stone-700"
-                        >
-                          <span className="text-accent mt-0.5 shrink-0">✦</span>
-                          {line}
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              </>
+            <h2 className="font-serif text-xl font-bold text-stone-800 leading-tight">
+              {service.title}
+            </h2>
+            {service.price && (
+              <span className="inline-block mt-1.5 text-xs font-semibold text-accent">
+                {service.price}
+              </span>
             )}
+            <div className="w-8 h-px bg-accent mt-2" />
           </div>
         </div>
+
+        {/* Description */}
+        <div className="px-6 pb-4">
+          <p className="text-sm text-stone-600 leading-relaxed">
+            {service.description}
+          </p>
+        </div>
+
+        {/* Details */}
+        {service.details && (
+          <div className="px-6 pb-6">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="flex-1 h-px bg-stone-300" />
+              <span className="text-[10px] uppercase tracking-widest text-stone-400 font-semibold">
+                Incluye
+              </span>
+              <div className="flex-1 h-px bg-stone-300" />
+            </div>
+            <div className="space-y-1.5">
+              {service.details
+                .split('\n')
+                .filter(Boolean)
+                .map((line, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-2 text-xs text-stone-600"
+                  >
+                    <span className="text-accent shrink-0 text-[10px]">✦</span>
+                    {line}
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {/* Bottom accent bar */}
+        <div className="h-1 w-full bg-accent" />
       </div>
     </div>
   );
