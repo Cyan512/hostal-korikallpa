@@ -9,13 +9,11 @@ interface Props {
   data: HomeRoomsEntity;
 }
 
-const rotations = ['-rotate-2', 'rotate-1', '-rotate-1', 'rotate-2', '-rotate-3', 'rotate-2'];
-
 export default function HomeFeaturedRoomsSectionV2({ data }: Props) {
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
 
   const handleRoomClick = (room: HomeRoomsEntity['rooms'][0]) => {
-    const roomData: Room = {
+    setSelectedRoom({
       id: String(room.id),
       name: room.name,
       description: room.description,
@@ -26,93 +24,241 @@ export default function HomeFeaturedRoomsSectionV2({ data }: Props) {
       ),
       features: (room.features ?? '').split('\n').filter(Boolean),
       amenities: (room.amenities ?? '').split('\n').filter(Boolean),
-    };
-    setSelectedRoom(roomData);
+    });
   };
+
+  // Always 4 slots — fill with nulls if fewer rooms
+  const featured = Array.from({ length: 4 }, (_, i) => data.rooms[i] ?? null);
+  const rotationDeg = [-2, 1, -1, 2];
 
   return (
     <>
       <section
-        className="py-12"
+        className="py-8"
         style={{
-          background: 'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
+          background:
+            'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
         }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
-          {/* Header */}
-          <div className="mb-10">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-stone-500">
-              Nuestras habitaciones
-            </p>
-            <h2 className="font-serif text-3xl font-bold text-stone-800 mt-1">
-              Espacios de Ensueño
-            </h2>
-            <div className="w-10 h-px bg-accent mt-3" />
-          </div>
-
-          {/* Polaroid grid */}
-          {/* Desktop: single row flex — same as about section */}
-          <div className="hidden lg:flex items-end gap-4 py-8">
-            {data.rooms.map((room, index) => (
-              <RoomPolaroid
-                key={room.id}
-                room={room}
-                index={index}
-                onSelect={handleRoomClick}
-              />
-            ))}
-          </div>
-
-          {/* Mobile / tablet: 2-col grid — no rotation */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-5 py-6 lg:hidden">
-            {data.rooms.map((room, index) => (
-              <div
-                key={room.id}
-                onClick={() => handleRoomClick(room)}
-                className="group cursor-pointer relative"
-                style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.14)' }}
-              >
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <img
-                    src={`${environment.strapi.apiEndpoint}${room.images[0]?.url}`}
-                    alt={room.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute top-2 left-2 bg-accent text-white text-[10px] font-bold px-2 py-1 leading-none">
-                    S/{room.price}
+          {/* ── Desktop (lg+): polaroids left, info right ── */}
+          <div className="hidden lg:flex items-center gap-10">
+            {/* LEFT — always 4 Polaroid slots */}
+            <div className="flex-1 flex items-center justify-between gap-3 py-8">
+              {featured.map((room, i) => {
+                const deg = rotationDeg[i % rotationDeg.length];
+                return (
+                  <div
+                    key={room?.id ?? `empty-${i}`}
+                    className="flex-1 min-w-0 cursor-pointer"
+                    style={{
+                      transform: `rotate(${deg}deg)`,
+                      transition: 'transform 0.3s',
+                      filter: 'drop-shadow(3px 6px 12px rgba(0,0,0,0.25))',
+                      visibility: room ? 'visible' : 'hidden',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (room)
+                        (e.currentTarget as HTMLDivElement).style.transform =
+                          'rotate(0deg) scale(1.05) translateY(-4px)';
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.transform =
+                        `rotate(${deg}deg)`;
+                    }}
+                    onClick={() => {
+                      if (room) handleRoomClick(room);
+                    }}
+                  >
+                    <div
+                      className="p-2 pb-0"
+                      style={{
+                        background:
+                          'linear-gradient(160deg, #faf6ee 0%, #f0ead8 50%, #e8dfc8 100%)',
+                      }}
+                    >
+                      <div className="aspect-square overflow-hidden relative">
+                        {room ? (
+                          <>
+                            <img
+                              src={`${environment.strapi.apiEndpoint}${room.images[0]?.url}`}
+                              alt={room.name}
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute top-2 left-2 bg-accent text-white text-[9px] font-bold px-1.5 py-0.5 leading-none">
+                              S/{room.price}
+                            </div>
+                          </>
+                        ) : (
+                          <div className="w-full h-full bg-stone-200/60 flex items-center justify-center">
+                            <span className="text-stone-300 text-2xl">✦</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="py-2 px-1 text-center">
+                        <p className="font-serif text-[11px] font-semibold text-stone-700 truncate">
+                          {room ? room.name : '\u00A0'}
+                        </p>
+                        <p className="text-[9px] uppercase tracking-widest text-stone-400 mt-0.5">
+                          {room ? room.type : '\u00A0'}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-2.5">
-                    <h3 className="font-serif text-white font-semibold text-xs leading-tight line-clamp-2">
-                      {room.name}
-                    </h3>
-                    <p className="text-[9px] uppercase tracking-widest text-white/60 mt-0.5">{room.type}</p>
-                  </div>
-                </div>
-                <div className="bg-white px-2.5 py-1.5 flex items-center justify-between">
-                  <span className="text-[9px] uppercase tracking-widest text-stone-400">Ver detalles</span>
-                  <svg className="w-3 h-3 text-accent" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
+                );
+              })}
+            </div>
+
+            {/* RIGHT — Info panel */}
+            <div className="w-64 shrink-0 space-y-5">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.25em] text-stone-500">
+                  Nuestras habitaciones
+                </p>
+                <h2 className="font-serif text-3xl font-bold text-stone-800 mt-1 leading-tight">
+                  Espacios de Ensueño
+                </h2>
               </div>
-            ))}
+
+              <div className="w-10 h-px bg-accent" />
+
+              <p className="text-sm text-stone-600 leading-relaxed">
+                Cada habitación ha sido diseñada combinando la calidez de la
+                arquitectura colonial cusqueña con comodidades modernas. Un
+                refugio auténtico en el corazón de los Andes.
+              </p>
+
+              <div className="space-y-2">
+                {[
+                  'Simples y Dobles',
+                  'Matrimoniales Queen / King',
+                  'Familiares',
+                  'Vista interior o exterior',
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-2 text-xs text-stone-600"
+                  >
+                    <span className="text-accent text-[10px]">✦</span>
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              <div className="w-10 h-px bg-stone-300" />
+
+              <Link
+                href="/rooms"
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary-dark text-white text-xs font-semibold uppercase tracking-widest hover:bg-primary transition-colors"
+              >
+                Ver Todas
+                <svg
+                  className="w-3.5 h-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
+            </div>
           </div>
 
-          {/* CTA */}
-          <div className="flex justify-center mt-8">
-            <Link
-              href="/rooms"
-              className="inline-flex items-center gap-2 px-8 py-3 bg-primary-dark text-white text-sm font-semibold uppercase tracking-widest hover:bg-primary transition-colors"
-            >
-              Ver Todas las Habitaciones
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
+          {/* ── Mobile / Tablet (< lg): stacked ── */}
+          <div className="flex flex-col gap-8 lg:hidden">
+            {/* Info */}
+            <div className="space-y-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.25em] text-stone-500">
+                  Nuestras habitaciones
+                </p>
+                <h2 className="font-serif text-3xl font-bold text-stone-800 mt-1">
+                  Espacios de Ensueño
+                </h2>
+              </div>
+              <div className="w-10 h-px bg-accent" />
+              <p className="text-sm text-stone-600 leading-relaxed">
+                Cada habitación combina la calidez colonial cusqueña con
+                comodidades modernas.
+              </p>
+              <Link
+                href="/rooms"
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-primary-dark text-white text-xs font-semibold uppercase tracking-widest hover:bg-primary transition-colors"
+              >
+                Ver Todas
+                <svg
+                  className="w-3.5 h-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
+            </div>
 
+            {/* Polaroids always 4 slots in 2x2 */}
+            <div className="grid grid-cols-2 gap-5 py-4">
+              {featured.map((room, i) => (
+                <div
+                  key={room?.id ?? `empty-${i}`}
+                  onClick={() => {
+                    if (room) handleRoomClick(room);
+                  }}
+                  className={room ? 'cursor-pointer' : 'pointer-events-none'}
+                  style={{
+                    filter: 'drop-shadow(3px 6px 12px rgba(0,0,0,0.2))',
+                    visibility: room ? 'visible' : 'hidden',
+                  }}
+                >
+                  <div
+                    className="p-2 pb-0"
+                    style={{
+                      background:
+                        'linear-gradient(160deg, #faf6ee 0%, #f0ead8 50%, #e8dfc8 100%)',
+                    }}
+                  >
+                    <div className="aspect-square overflow-hidden relative">
+                      {room ? (
+                        <>
+                          <img
+                            src={`${environment.strapi.apiEndpoint}${room.images[0]?.url}`}
+                            alt={room.name}
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute top-2 left-2 bg-accent text-white text-[9px] font-bold px-1.5 py-0.5 leading-none">
+                            S/{room.price}
+                          </div>
+                        </>
+                      ) : (
+                        <div className="w-full h-full bg-stone-200/60 flex items-center justify-center">
+                          <span className="text-stone-300 text-2xl">✦</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="py-2 px-1 text-center">
+                      <p className="font-serif text-[11px] font-semibold text-stone-700 truncate">
+                        {room?.name ?? '\u00A0'}
+                      </p>
+                      <p className="text-[9px] uppercase tracking-widest text-stone-400 mt-0.5">
+                        {room?.type ?? '\u00A0'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -120,73 +266,5 @@ export default function HomeFeaturedRoomsSectionV2({ data }: Props) {
         <RoomModal room={selectedRoom} onClose={() => setSelectedRoom(null)} />
       )}
     </>
-  );
-}
-
-/* ─── Room Polaroid card ──────────────────────────────────────── */
-
-interface RoomPolaroidProps {
-  room: HomeRoomsEntity['rooms'][0];
-  index: number;
-  onSelect: (room: HomeRoomsEntity['rooms'][0]) => void;
-}
-
-function RoomPolaroid({ room, index, onSelect }: RoomPolaroidProps) {
-  const rotationDeg = [-2, 1, -1, 2, -3, 2];
-  const deg = rotationDeg[index % rotationDeg.length];
-
-  return (
-    <div
-      className="w-full lg:w-52 lg:shrink-0"
-      style={{ transform: `rotate(${deg}deg)`, transition: 'transform 0.3s' }}
-      onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.transform = 'rotate(0deg) scale(1.05) translateY(-4px)'; }}
-      onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.transform = `rotate(${deg}deg)`; }}
-    >
-      <div
-        onClick={() => onSelect(room)}
-        className="group w-full cursor-pointer relative"
-        style={{ boxShadow: '0 8px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.1)' }}
-      >
-        {/* Image — rectangular 3:4 */}
-        <div className="relative aspect-[3/4] overflow-hidden">
-          <img
-            src={`${environment.strapi.apiEndpoint}${room.images[0]?.url}`}
-            alt={room.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-
-          {/* Price badge — top left */}
-          <div className="absolute top-3 left-3 bg-accent text-white text-xs font-bold px-2 py-1 leading-none">
-            S/{room.price}
-            <span className="font-normal opacity-80 ml-0.5 text-[10px]">/noche</span>
-          </div>
-
-          {/* Type badge — top right */}
-          <div className="absolute top-3 right-3 bg-white/90 text-stone-700 text-[9px] font-semibold uppercase tracking-widest px-2 py-1 leading-none">
-            {room.type}
-          </div>
-
-          {/* Bottom gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-          {/* Room name */}
-          <div className="absolute bottom-0 left-0 right-0 p-3">
-            <h3 className="font-serif text-white font-semibold text-sm leading-tight line-clamp-2">
-              {room.name}
-            </h3>
-          </div>
-        </div>
-
-        {/* Footer strip */}
-        <div className="bg-white px-3 py-2 flex items-center justify-between border-t border-stone-100">
-          <span className="text-[10px] uppercase tracking-widest text-stone-400 font-medium">
-            Ver detalles
-          </span>
-          <svg className="w-3.5 h-3.5 text-accent" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </div>
-      </div>
-    </div>
   );
 }

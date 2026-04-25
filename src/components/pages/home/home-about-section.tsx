@@ -26,11 +26,11 @@ export default function HomeAboutSection() {
     <section
       className="py-8"
       style={{
-        background: 'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
+        background:
+          'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
       }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-
         {/* ── Desktop (lg+): side-by-side ── */}
         <div className="hidden lg:flex items-center gap-8">
           {/* Contact card */}
@@ -59,7 +59,6 @@ export default function HomeAboutSection() {
             ))}
           </div>
         </div>
-
       </div>
     </section>
   );
@@ -107,8 +106,8 @@ function ContactCard() {
       {/* Contact info */}
       <div className="space-y-1.5 text-xs text-stone-700">
         <p>
-          <span className="font-semibold text-accent mr-1">C.</span>
-          + 51 084 123 456
+          <span className="font-semibold text-accent mr-1">C.</span>+ 51 084 123
+          456
         </p>
         <p className="leading-relaxed">
           Portal de las Carnes #236, 1° piso,
@@ -146,7 +145,8 @@ function Polaroid({ photo }: { photo: PhotoItem }) {
       <div
         className="p-2 pb-0"
         style={{
-          background: 'linear-gradient(160deg, #faf6ee 0%, #f0ead8 50%, #e8dfc8 100%)',
+          background:
+            'linear-gradient(160deg, #faf6ee 0%, #f0ead8 50%, #e8dfc8 100%)',
         }}
       >
         <div className="aspect-square overflow-hidden">
@@ -157,7 +157,9 @@ function Polaroid({ photo }: { photo: PhotoItem }) {
           />
         </div>
         <div className="py-2 px-1 text-center">
-          <p className="font-serif text-[11px] text-stone-600 truncate">{photo.alt}</p>
+          <p className="font-serif text-[11px] text-stone-600 truncate">
+            {photo.alt}
+          </p>
         </div>
       </div>
     </div>

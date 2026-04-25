@@ -32,7 +32,12 @@ export default function GalleryListSectionV2({ data }: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-6">
           {galleryImages.map((image, index) => {
             // Alternating slight rotations for a natural Polaroid spread feel
-            const rotations = ['-rotate-2', 'rotate-1', '-rotate-1', 'rotate-2'];
+            const rotations = [
+              '-rotate-2',
+              'rotate-1',
+              '-rotate-1',
+              'rotate-2',
+            ];
             const rotation = rotations[index % rotations.length];
 
             return (
@@ -43,7 +48,13 @@ export default function GalleryListSectionV2({ data }: Props) {
                 style={{ filter: 'drop-shadow(3px 6px 12px rgba(0,0,0,0.25))' }}
               >
                 {/* Polaroid frame */}
-                <div className="p-3 pb-0" style={{ background: 'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)' }}>
+                <div
+                  className="p-3 pb-0"
+                  style={{
+                    background:
+                      'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
+                  }}
+                >
                   {/* Image area */}
                   <div className="relative aspect-square overflow-hidden">
                     <img

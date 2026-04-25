@@ -3,7 +3,6 @@ import { Link } from '@/src/i18n/navigation';
 export default function HomeHeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
@@ -24,7 +23,6 @@ export default function HomeHeroSection() {
       {/* Content — left aligned */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-8 lg:px-16 py-24">
         <div className="max-w-lg">
-
           {/* Logo */}
           <img
             src="/logo.webp"
@@ -54,10 +52,8 @@ export default function HomeHeroSection() {
               Contactar
             </Link>
           </div>
-
         </div>
       </div>
-
     </section>
   );
 }
