@@ -10,7 +10,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <div>
       <Header />
-      <main className="flex-1 pt-20">
+      <main className="flex-1">
         <div>{children}</div>
       </main>
       <Footer />
