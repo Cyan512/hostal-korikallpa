@@ -29,28 +29,45 @@ export default function GalleryListSectionV2({ data }: Props) {
   return (
     <section className="py-12">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {galleryImages.map((image, index) => (
-            <div
-              key={index}
-              onClick={() => openLightbox(index)}
-              className="group relative mb-4 bg-primary/10 rounded-sm overflow-hidden hover:shadow-lg transition-all cursor-pointer aspect-square"
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
-                <div className="p-5">
-                  <h3 className="font-serif text-lg font-semibold text-white">
-                    {image.title}
-                  </h3>
-                  <p className="text-sm text-white/70">{image.category}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-6">
+          {galleryImages.map((image, index) => {
+            // Alternating slight rotations for a natural Polaroid spread feel
+            const rotations = ['-rotate-2', 'rotate-1', '-rotate-1', 'rotate-2'];
+            const rotation = rotations[index % rotations.length];
+
+            return (
+              <div
+                key={index}
+                onClick={() => openLightbox(index)}
+                className={`group cursor-pointer transition-all duration-300 hover:scale-105 hover:rotate-0 hover:z-10 relative ${rotation}`}
+                style={{ filter: 'drop-shadow(3px 6px 12px rgba(0,0,0,0.25))' }}
+              >
+                {/* Polaroid frame */}
+                <div className="bg-white p-3 pb-10">
+                  {/* Image area */}
+                  <div className="relative aspect-square overflow-hidden">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+                      <div className="p-3">
+                        <p className="text-xs text-white/80">{image.category}</p>
+                      </div>
+                    </div>
+                  </div>
+                  {/* Polaroid caption area */}
+                  <div className="pt-2 pb-1 text-center">
+                    <p className="font-handwriting text-sm text-gray-600 truncate">
+                      {image.title}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
