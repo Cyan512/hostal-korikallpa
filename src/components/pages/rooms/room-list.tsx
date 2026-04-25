@@ -65,14 +65,14 @@ export default function RoomList() {
   return (
     <>
       <section
-        className="py-12"
+        className="py-6 overflow-hidden"
         style={{
           background:
             'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
         }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 py-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {rooms.map((room, index) => {
               const rotations = [-2, 1, -1, 2, -3, 2, 1, -2];
               const deg = rotations[index % rotations.length];

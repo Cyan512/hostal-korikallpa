@@ -1,62 +1,46 @@
-import { Link } from '@/src/i18n/navigation';
-
 export default function Footer() {
   return (
-    <footer className="bg-primary-dark text-white mt-auto">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 border border-white/30 flex items-center justify-center">
-                <span className="font-serif text-lg font-semibold text-white">
-                  QK
-                </span>
-              </div>
-              <span className="font-serif text-xl font-semibold">
-                Qori Kallpa
-              </span>
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed max-w-xs">
-              Hospedaje boutique en el corazón del Cusco. Donde la elegancia se
-              encuentra con la tradición.
-            </p>
-          </div>
+    <footer
+      style={{
+        background: 'linear-gradient(160deg, #2a2420 0%, #1a1410 100%)',
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 flex flex-col items-center text-center space-y-4">
+        {/* Logo */}
+        <img
+          src="/logo.webp"
+          alt="Qorikallpa"
+          className="w-32 brightness-0 invert opacity-90"
+        />
 
-          <div className="space-y-4">
-            <h4 className="font-serif font-semibold text-lg">Navegación</h4>
-            <ul className="space-y-3">
-              {[
-                { href: '/', label: 'Inicio' },
-                { href: '/rooms', label: 'Habitaciones' },
-                { href: '/gallery', label: 'Galería' },
-                { href: '/contact', label: 'Contacto' },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Description */}
+        <p className="text-white/60 text-sm leading-relaxed max-w-sm">
+          Hospedaje boutique en el corazón del Cusco. Donde la elegancia se
+          encuentra con la tradición andina.
+        </p>
 
-          <div className="space-y-4">
-            <h4 className="font-serif font-semibold text-lg">Contacto</h4>
-            <ul className="space-y-3 text-white/70 text-sm">
-              <li>Cusco, Perú</li>
-              <li>reservas@qorikallpa.com</li>
-              <li>+51 984 123 456</li>
-            </ul>
-          </div>
+        {/* Divider */}
+        <div className="flex items-center gap-3 w-48">
+          <div className="flex-1 h-px bg-white/10" />
+          <span className="text-[#C8860A] text-sm">✦</span>
+          <div className="flex-1 h-px bg-white/10" />
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10">
-          <p className="text-center text-white/50 text-sm">
-            © {new Date().getFullYear()} Qori Kallpa. Todos los derechos
-            reservados.
+        {/* Tagline */}
+        <p className="font-serif text-sm text-white/40 italic">
+          &ldquo;El espíritu andino hecho descanso&rdquo;
+        </p>
+      </div>
+
+      {/* Bottom bar */}
+      <div
+        className="border-t border-white/10"
+        style={{ background: 'rgba(0,0,0,0.3)' }}
+      >
+        <div className="max-w-7xl mx-auto px-6 py-3 text-center">
+          <p className="text-white/25 text-xs">
+            © {new Date().getFullYear()} Qorikallpa · Hotel Boutique · Cusco,
+            Perú
           </p>
         </div>
       </div>

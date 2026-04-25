@@ -1,24 +1,49 @@
 export default function SharedHeroSection() {
   return (
-    <section className="relative py-32 bg-primary-dark text-white overflow-hidden">
-      <div className="absolute inset-0">
+    <section className="relative h-64 md:h-80 flex items-center overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=1920&q=80"
           alt="Cusco"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-black/50" />
+        {/* Uniform cream overlay over entire section */}
+        <div
+          className="absolute inset-0"
+          style={{ background: 'rgba(237,229,204,0.65)' }}
+        />
       </div>
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 text-center">
-        <span className="inline-block px-4 py-1.5 border border-white/20 text-xs uppercase tracking-[0.2em] mb-6">
-          Galería
-        </span>
-        <h1 className="font-serif text-5xl md:text-6xl font-semibold mb-4">
-          Qori Kallpa
-        </h1>
-        <p className="text-white/70 max-w-2xl mx-auto">
-          Explora nuestros espacios diseñados con elegancia colonial.
-        </p>
+
+      {/* Content — centered */}
+      <div className="relative z-10 w-full flex flex-col items-center text-center px-6">
+        <div className="flex flex-col items-center">
+          {/* Logo */}
+          <img
+            src="/logo.webp"
+            alt="Qorikallpa"
+            className="w-16 mb-3 drop-shadow"
+          />
+
+          {/* Label */}
+          <p className="text-[10px] uppercase tracking-[0.3em] text-stone-600 font-medium">
+            Hotel Boutique · Cusco
+          </p>
+
+          {/* Title */}
+          <h1 className="font-serif text-4xl md:text-5xl font-bold leading-none mt-1">
+            <span className="text-stone-800">Qori</span>
+            <span className="text-[#C8860A]">kallpa</span>
+          </h1>
+
+          {/* Divider */}
+          <div className="w-10 h-0.5 bg-[#C8860A] mt-3 mb-3" />
+
+          {/* Tagline */}
+          <p className="font-serif text-sm text-stone-600 italic">
+            &ldquo;El espíritu andino hecho descanso&rdquo;
+          </p>
+        </div>
       </div>
     </section>
   );

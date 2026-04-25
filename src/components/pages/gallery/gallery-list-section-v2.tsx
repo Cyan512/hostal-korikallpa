@@ -27,9 +27,26 @@ export default function GalleryListSectionV2({ data }: Props) {
   };
 
   return (
-    <section className="py-12">
+    <section
+      className="py-12"
+      style={{
+        background:
+          'linear-gradient(160deg, #f5f0e8 0%, #ede8d8 50%, #e8dfc8 100%)',
+      }}
+    >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-6">
+        {/* Header */}
+        <div className="mb-6">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-stone-500">
+            Nuestros espacios
+          </p>
+          <h2 className="font-serif text-3xl font-bold text-stone-800 mt-1">
+            Galería
+          </h2>
+          <div className="w-10 h-px bg-accent mt-3" />
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 py-6">
           {galleryImages.map((image, index) => {
             // Alternating slight rotations for a natural Polaroid spread feel
             const rotations = [
