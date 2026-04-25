@@ -1,8 +1,19 @@
 import { getContentPage } from '@/src/api/strapi/get-content-page';
+import { Metadata } from 'next';
 import RoomList from '@/src/components/pages/rooms/room-list';
 import SharedHeroSection from '@/src/components/pages/shared-hero-section';
 import { RoomBlocks, RoomContent } from '@/src/types/pages/rooms-page.entity';
 import { setRequestLocale } from 'next-intl/server';
+
+export const metadata: Metadata = {
+  title: 'Habitaciones | Qorikallpa Hotel Boutique Cusco',
+  description:
+    'Nuestras habitaciones: simples, dobles, matrimoniales y familiares. Arquitectura colonial cusqueña con comodidades modernas.',
+};
+
+export function generateStaticParams() {
+  return [{ locale: 'es' }, { locale: 'en' }, { locale: 'fr' }];
+}
 
 function renderComponent(component: RoomBlocks, index: number) {
   const key = `${component.id}-${index}`;

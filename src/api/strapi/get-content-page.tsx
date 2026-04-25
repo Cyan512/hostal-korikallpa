@@ -11,7 +11,7 @@ export async function getContentPage<T>(
       headers: {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
       },
-      next: { revalidate: 0 },
+      next: { revalidate: 3600 },
     }
   );
 

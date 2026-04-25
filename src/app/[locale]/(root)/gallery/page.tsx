@@ -1,4 +1,5 @@
 import { getContentPage } from '@/src/api/strapi/get-content-page';
+import { Metadata } from 'next';
 import GalleryListSectionV2 from '@/src/components/pages/gallery/gallery-list-section-v2';
 import SharedHeroSection from '@/src/components/pages/shared-hero-section';
 import {
@@ -7,6 +8,16 @@ import {
   GalleryListEntity,
 } from '@/src/types/pages/gallery-page.entity';
 import { setRequestLocale } from 'next-intl/server';
+
+export const metadata: Metadata = {
+  title: 'Galería | Qorikallpa Hotel Boutique Cusco',
+  description:
+    'Explora nuestros espacios: habitaciones, áreas comunes y la magia de Cusco desde Qorikallpa.',
+};
+
+export function generateStaticParams() {
+  return [{ locale: 'es' }, { locale: 'en' }, { locale: 'fr' }];
+}
 
 function renderComponent(component: GalleryBlocks, index: number) {
   const key = `${component.id}-${index}`;

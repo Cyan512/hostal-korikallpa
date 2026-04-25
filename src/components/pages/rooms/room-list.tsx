@@ -154,10 +154,10 @@ export default function RoomList() {
               {loading ? (
                 <div className="space-y-3">
                   {[...Array(5)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-7 bg-stone-200/60 rounded animate-pulse"
-                    />
+                    <div key={i} className="space-y-2">
+                      <div className="h-3 bg-stone-200/60 rounded animate-pulse w-20" />
+                      <div className="h-2 bg-stone-200/60 rounded animate-pulse w-16" />
+                    </div>
                   ))}
                 </div>
               ) : (
@@ -171,12 +171,30 @@ export default function RoomList() {
             {/* Grid de cards */}
             <div className="flex-1 min-w-0">
               {loading ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
                   {[...Array(8)].map((_, i) => (
                     <div
                       key={i}
-                      className="aspect-square bg-stone-200/60 rounded animate-pulse"
-                    />
+                      className="rounded-sm"
+                      style={{
+                        filter: 'drop-shadow(3px 6px 12px rgba(0,0,0,0.25))',
+                        transform: `rotate(${[-2, 1, -1, 2, -3, 2, 1, -2][i % 8]}deg)`,
+                      }}
+                    >
+                      <div
+                        className="p-2 pb-0"
+                        style={{
+                          background:
+                            'linear-gradient(160deg, #faf6ee 0%, #f0ead8 50%, #e8dfc8 100%)',
+                        }}
+                      >
+                        <div className="aspect-square overflow-hidden bg-stone-200/60 animate-pulse" />
+                        <div className="py-3 px-1 text-center space-y-2">
+                          <div className="h-3 bg-stone-200/60 rounded animate-pulse mx-2" />
+                          <div className="h-2 bg-stone-200/60 rounded animate-pulse mx-8" />
+                        </div>
+                      </div>
+                    </div>
                   ))}
                 </div>
               ) : filteredRooms.length === 0 ? (

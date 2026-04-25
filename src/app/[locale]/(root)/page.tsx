@@ -1,4 +1,5 @@
 import { getContentPage } from '@/src/api/strapi/get-content-page';
+import { Metadata } from 'next';
 import HomeAboutSection from '@/src/components/pages/home/home-about-section';
 import HomeFeaturedRoomsSectionV2 from '@/src/components/pages/home/home-featured-rooms-section-v2';
 import HomeHeroSection from '@/src/components/pages/home/home-hero-section';
@@ -10,6 +11,16 @@ import {
   HomeServicesEntity,
 } from '@/src/types/pages/home-page.entity';
 import { setRequestLocale } from 'next-intl/server';
+
+export const metadata: Metadata = {
+  title: 'Qorikallpa Hotel Boutique Cusco',
+  description:
+    'El espíritu andino hecho descanso. Hotel boutique en Cusco con arquitectura colonial cusqueña y comodidades modernas.',
+};
+
+export function generateStaticParams() {
+  return [{ locale: 'es' }, { locale: 'en' }, { locale: 'fr' }];
+}
 
 function renderComponent(component: HomeBlocks, index: number) {
   const key = `${component.id}-${index}`;

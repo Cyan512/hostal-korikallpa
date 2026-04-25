@@ -1,4 +1,5 @@
 import { getContentPage } from '@/src/api/strapi/get-content-page';
+import { Metadata } from 'next';
 import ContactContactSection from '@/src/components/pages/contact/contact-contact-section';
 import SharedHeroSection from '@/src/components/pages/shared-hero-section';
 import {
@@ -6,6 +7,15 @@ import {
   ContactContent,
 } from '@/src/types/pages/contact-page.entity';
 import { setRequestLocale } from 'next-intl/server';
+
+export const metadata: Metadata = {
+  title: 'Contacto | Qorikallpa Hotel Boutique Cusco',
+  description: 'Contáctanos para reservas y consultas.otel boutique en Cusco.',
+};
+
+export function generateStaticParams() {
+  return [{ locale: 'es' }, { locale: 'en' }, { locale: 'fr' }];
+}
 
 function renderComponent(component: ContactBlocks, index: number) {
   const key = `${component.id}-${index}`;
