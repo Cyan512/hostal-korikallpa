@@ -1,49 +1,63 @@
 import { Link } from '@/src/i18n/navigation';
+
 export default function HomeHeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-primary-dark">
-      <div className="absolute inset-0">
+    <section className="relative min-h-screen flex items-center overflow-hidden">
+
+      {/* Background */}
+      <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80"
-          alt="Qori Kallpa"
-          className="w-full h-full object-cover"
+          src="/fondo-hero.jpg"
+          alt="Qorikallpa Cusco"
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-black/50" />
+        {/* Dark gradient left-to-right — foto visible a la derecha */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(100deg, rgba(240,232,208,0.75) 0%, rgba(237,229,204,0.4) 50%, rgba(237,229,204,0.0) 100%)',
+          }}
+        />
       </div>
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.1)_0%,transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(180,83,9,0.1)_0%,transparent_50%)]" />
-      </div>
 
-      <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <span className="inline-block px-4 py-1.5 border border-white/20 text-white/60 text-xs uppercase tracking-[0.25em] mb-8">
-          Hostal Boutique
-        </span>
+      {/* Content — left aligned */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-8 lg:px-16 py-24">
+        <div className="max-w-lg">
 
-        <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-semibold text-white mb-6 leading-tight">
-          Qori Kallpa
-        </h1>
+          {/* Logo */}
+          <img
+            src="/logo.webp"
+            alt="Qorikallpa"
+            className="w-40 md:w-48 mb-4"
+          />
+          {/* Divider */}
+          <div className="w-16 h-0.5 bg-[#C8860A] mb-5" />
 
-        <p className="text-lg md:text-xl text-white/70 mb-10 font-light max-w-2xl mx-auto">
-          Un refugio elegante en el corazón del Cusco. Donde la tradición andina
-          se encuentra con el confort moderno.
-        </p>
+          {/* Tagline */}
+          <p className="font-serif text-lg md:text-xl text-stone-700 italic mb-10 leading-relaxed">
+            &ldquo;El espíritu andino hecho descanso&rdquo;
+          </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/rooms"
-            className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-primary-dark font-medium hover:bg-white/90 transition-colors"
-          >
-            Ver Habitaciones
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center px-8 py-3.5 border border-white/30 text-white font-medium hover:bg-white/10 transition-colors"
-          >
-            Contactar
-          </Link>
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
+              href="/rooms"
+              className="inline-flex items-center justify-center px-8 py-3.5 bg-[#C8860A] text-white text-sm font-semibold uppercase tracking-widest hover:bg-[#a86e08] transition-colors"
+            >
+              Ver Habitaciones
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center px-8 py-3.5 border border-stone-700 text-stone-800 text-sm font-semibold uppercase tracking-widest hover:bg-stone-800/10 transition-all"
+            >
+              Contactar
+            </Link>
+          </div>
+
         </div>
       </div>
+
     </section>
   );
 }
